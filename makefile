@@ -18,17 +18,28 @@ TEMPO           := grafana/tempo:2.5.0
 LOKI            := grafana/loki:3.1.0
 PROMTAIL        := grafana/promtail:3.1.0
 
-KIND_CLUSTER    := ardan-starter-cluster
+KIND_CLUSTER    := paulohrt-starter-cluster
 NAMESPACE       := sales-system
 SALES_APP       := sales
 AUTH_APP        := auth
-BASE_IMAGE_NAME := localhost/ardanlabs
-VERSION         := 0.0.1
+BASE_IMAGE_NAME := localhost/paulohrt
+VERSION         := 0.0.1-$(shell git rev-parse --short HEAD)
 SALES_IMAGE     := $(BASE_IMAGE_NAME)/$(SALES_APP):$(VERSION)
 METRICS_IMAGE   := $(BASE_IMAGE_NAME)/metrics:$(VERSION)
 AUTH_IMAGE      := $(BASE_IMAGE_NAME)/$(AUTH_APP):$(VERSION)
 
-# VERSION       := "0.0.1-$(shell git rev-parse --short HEAD)"
+# ==============================================================================
+# Building containers
+
+build: sales
+
+sales:
+	docker build \
+		-f zarf/docker/Dockerfile-sales \
+		-t $(SALES_IMAGE) \
+		--build-arg BUILD_REF=$(VERSION) \
+		--build-arg BUILD_DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ") \
+		.
 
 # ==============================================================================
 # Running from within k8s/kind
