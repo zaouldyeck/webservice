@@ -45,7 +45,7 @@ func run(ctx context.Context, log *logger.Logger) error {
 	// ----------------------------------------------------------------------------------
 	// GOMAXPROCS
 
-	log.Info(ctx, "startup", "GOMAXPROCS", runtime.GOMAXPROCS(0), "build", build)
+	log.Info(ctx, "startup", "GOMAXPROCS", runtime.GOMAXPROCS(0))
 
 	// -------------------------------------------------------------------------
 	// Configuration
@@ -59,7 +59,7 @@ func run(ctx context.Context, log *logger.Logger) error {
 			ShutdownTimeout    time.Duration `conf:"default:20s"`
 			APIHost            string        `conf:"default:0.0.0.0:3000"`
 			DebugHost          string        `conf:"default:0.0.0.0:3010"`
-			CORSAllowedOrigins []string      `conf:"default:*"`
+			CORSAllowedOrigins []string      `conf:"default:*,mask"`
 		}
 	}{
 		Version: conf.Version{
