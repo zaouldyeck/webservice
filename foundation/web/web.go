@@ -3,6 +3,7 @@ package web
 
 import (
 	"context"
+	"fmt"
 	"net/http"
 	"os"
 )
@@ -17,13 +18,15 @@ type Handler func(ctx context.Context, w http.ResponseWriter, r *http.Request) e
 type App struct {
 	*http.ServeMux
 	shutdown chan os.Signal
+	mw       []MidHandler
 }
 
 // NewApp creates an App value that handle a set of routes for the application.
-func NewApp(shutdown chan os.Signal) *App {
+func NewApp(shutdown chan os.Signal, mw ...MidHandler) *App {
 	return &App{
 		ServeMux: http.NewServeMux(),
 		shutdown: shutdown,
+		mw:       mw,
 	}
 }
 
@@ -32,7 +35,16 @@ func NewApp(shutdown chan os.Signal) *App {
 func (a *App) HandleFunc(pattern string, handler Handler) {
 
 	h := func(w http.ResponseWriter, r *http.Request) {
-		handler(r.Context(), w, r)
+
+		// PUT ANY CODE HERE
+
+		if err := handler(r.Context(), w, r); err != nil {
+			// ERROR HANDLING HERE
+			fmt.Println(err)
+			return
+		}
+
+		// PUT ANY CODE HERE
 	}
 
 	a.ServeMux.HandleFunc(pattern, h)
