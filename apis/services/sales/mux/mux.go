@@ -6,12 +6,14 @@ import (
 	"os"
 
 	"github.com/zaouldyeck/webservice/apis/services/sales/route/sys/checkapi"
+	"github.com/zaouldyeck/webservice/app/api/mid"
+	"github.com/zaouldyeck/webservice/foundation/logger"
 	"github.com/zaouldyeck/webservice/foundation/web"
 )
 
 // WebAPI constructs a http.Handler with all application routes bound.
-func WebAPI(shutdown chan os.Signal) *web.App {
-	mux := web.NewApp(shutdown)
+func WebAPI(log *logger.Logger, shutdown chan os.Signal) *web.App {
+	mux := web.NewApp(shutdown, mid.Logger(log))
 
 	checkapi.Routes(mux)
 
