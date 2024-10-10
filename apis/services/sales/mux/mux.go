@@ -1,12 +1,12 @@
-// Package mux provides support to bind domain level routes
-// to the application mux.
+// Package mid provides support to bind domain level routes
+// to the application mid.
 package mux
 
 import (
 	"os"
 
+	"github.com/zaouldyeck/webservice/apis/services/api/mid"
 	"github.com/zaouldyeck/webservice/apis/services/sales/route/sys/checkapi"
-	"github.com/zaouldyeck/webservice/app/api/mid"
 	"github.com/zaouldyeck/webservice/foundation/logger"
 	"github.com/zaouldyeck/webservice/foundation/web"
 )

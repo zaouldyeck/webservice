@@ -13,7 +13,7 @@ type httpStatus interface {
 
 // Respond sends a response to the client.
 func Respond(ctx context.Context, w http.ResponseWriter, data any, statusCode int) error {
-	// setStatusCode(ctx, statusCode)
+	setStatusCode(ctx, statusCode)
 
 	if statusCode == http.StatusNoContent {
 		w.WriteHeader(statusCode)

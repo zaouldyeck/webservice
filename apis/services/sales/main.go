@@ -16,6 +16,7 @@ import (
 	"github.com/zaouldyeck/webservice/apis/services/api/debug"
 	"github.com/zaouldyeck/webservice/apis/services/sales/mux"
 	"github.com/zaouldyeck/webservice/foundation/logger"
+	"github.com/zaouldyeck/webservice/foundation/web"
 )
 
 var build = "develop"
@@ -30,7 +31,7 @@ func main() {
 	}
 
 	traceIDFn := func(ctx context.Context) string {
-		return "" // web.GetTraceID(ctx)
+		return web.GetTraceID(ctx)
 	}
 
 	log = logger.NewWithEvents(os.Stdout, logger.LevelInfo, "SALES", traceIDFn, events)
