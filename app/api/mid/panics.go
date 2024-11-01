@@ -4,6 +4,8 @@ import (
 	"context"
 	"fmt"
 	"runtime/debug"
+
+	"github.com/zaouldyeck/webservice/app/api/metrics"
 )
 
 // Panics recover from panics and converts the panic to an error
@@ -16,6 +18,8 @@ func Panics(ctx context.Context, handler Handler) (err error) {
 		if rec := recover(); rec != nil {
 			trace := debug.Stack()
 			err = fmt.Errorf("PANIC [%v] TRACE[%s]", rec, string(trace))
+
+			metrics.AddPanics(ctx)
 		}
 	}()
 
