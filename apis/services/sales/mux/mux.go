@@ -1,4 +1,4 @@
-// Package mid provides support to bind domain level routes
+// Package mux provides support to bind domain level routes
 // to the application mid.
 package mux
 
