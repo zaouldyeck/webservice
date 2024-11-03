@@ -26,6 +26,8 @@ curl-error:
 curl-panic:
 	curl -il -X GET http://localhost:3000/testpanic
 
+admin:
+	go run apis/tooling/admin/main.go
 
 # ==============================================================================
 # Define dependencies
