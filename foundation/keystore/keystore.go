@@ -32,6 +32,26 @@ func New() *KeyStore {
 	}
 }
 
+// PrivateKey searches the keystore for a specific key id and returns private key.
+func (ks *KeyStore) PrivateKey(kid string) (string, error) {
+	key, found := ks.store[kid]
+	if !found {
+		return "", errors.New("key id not found")
+	}
+
+	return key.privatePEM, nil
+}
+
+// PublicKey searches the keystore for a specific key id and returns public key.
+func (ks *KeyStore) PublicKey(kid string) (string, error) {
+	key, found := ks.store[kid]
+	if !found {
+		return "", errors.New("key id not found")
+	}
+
+	return key.publicPEM, nil
+}
+
 // LoadRSAKeys loads a set of RSA pems. Name of pem file will be used as key id.
 func (ks *KeyStore) LoadRSAKeys(fsys fs.FS) error {
 	fn := func(filename string, dirEntry fs.DirEntry, err error) error {
